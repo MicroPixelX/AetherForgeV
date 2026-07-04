@@ -45,6 +45,23 @@ scons platform=web target=template_release
 
 Built artifact lands in `addons/aetherforgev/bin/aetherforgev.<platform>.<target>.<ext>`.
 
+## Deploy to itch.io (auto on push to `main`)
+
+`.github/workflows/deploy-web.yml` builds the GDExtension lib for Web
+(Emscripten), exports the Godot Web build, and uploads to itch.io.
+
+**One-time setup:**
+1. Create the game at https://itch.io/game/new — slug: `micropixelx/aetherforgev`.
+2. Generate an API key at https://itch.io/api-keys.
+3. In the repo: Settings → Secrets → Actions → add `BUTLER_API_KEY` (paste the key).
+4. Push to `main` — the workflow runs and your game appears at
+   `https://micropixelx.itch.io/aetherforgev`.
+
+Override the slug in the workflow `env:` block if you choose a different name.
+
+Even before you add the secret, the workflow still builds + uploads the export
+as a downloadable artifact on the Actions run, so you can grab the files.
+
 ## Run / export
 
 ```sh
@@ -60,7 +77,7 @@ godot4 --export-release "Web"
 ## Roadmap (MVP + crafting + saving, singleplayer-first)
 
 1. ✅ Project bootstrap + GDExtension pipeline + cross-export config
-2. ⬜ Voxel core: chunk data, face-culling/greedy meshing, load/unload radius
+2. ✅ Voxel core: blocks, chunk, face-culling mesher, world container, SIM tests
 3. ⬜ Worldgen (FastNoiseLite), biomes, block palette
 4. ⬜ Player controller + block raycast pick + place/break
 5. ⬜ Inventory + simple crafting grid + recipes

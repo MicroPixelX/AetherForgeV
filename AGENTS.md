@@ -9,6 +9,11 @@ C++ voxel sandbox on Godot 4 (GDExtension). Exports to desktop + browser.
 
 ## Commands
 
+### Deploy to itch.io (auto CI)
+Triggers on push to `main` via `.github/workflows/deploy-web.yml`. See README
+"Deploy to itch.io" for one-time secrets setup. Output channel: `html`.
+To override the target, edit the `ITCH_USER`/`ITCH_GAME` env in the workflow.
+
 ### Build C++ library
 ```sh
 # Debug desktop build (Linux)
