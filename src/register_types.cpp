@@ -4,6 +4,7 @@
 #include <godot_cpp/godot.hpp>
 
 #include "aether_test.hpp"
+#include "bridge/chunk_mesh_bridge.hpp"
 
 using namespace godot;
 
@@ -14,6 +15,7 @@ void initialize_types(ModuleInitializationLevel p_level) {
         return;
     }
     ClassDB::register_class<AetherTest>();
+    ClassDB::register_class<ChunkMeshBridge>();
 }
 
 void uninitialize_types(ModuleInitializationLevel p_level) {

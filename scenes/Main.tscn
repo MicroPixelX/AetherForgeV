@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://addons/aetherforgev/aetherforgev.gdextension" id="ext_aether"]
+[ext_resource type="Script" path="res://scripts/test_chunk.gd" id="ext_test_chunk"]
 
 [sub_resource type="GDScript" id="sub_cam_look"]
 script/source = "extends Camera3D
@@ -18,12 +19,15 @@ func _unhandled_input(e):
 [node name="Main" type="Node3D"]
 
 [node name="Camera" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 4, 4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 48, 48)
 current = true
 script = SubResource("sub_cam_look")
 
 [node name="DirectionalLight" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.707, 0.707, 0, -0.707, 0.707, 0, 8, 0)
+transform = Transform3D(1, 0, 0, 0, 0.707, 0.707, 0, -0.707, 0.707, 0, 48, 0)
 
-[node name="AetherTest" type="Node" parent="."]
+[node name="ChunkMeshBridge" type="Node" parent="."]
 script = ExtResource("ext_aether")
+
+[node name="TestChunk" type="Node3D" parent="."]
+script = ExtResource("ext_test_chunk")

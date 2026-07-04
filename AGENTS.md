@@ -29,6 +29,13 @@ godot4 --export-release "Linux Desktop"
 godot4 --export-release "Web"
 ```
 
+### Test the SIM layer (no godot-cpp needed)
+```sh
+g++ -std=c++17 -Wall -Wextra -Isrc tests/test_sim.cpp \
+    src/world/blocks.cpp src/world/chunk.cpp src/world/chunk_mesher.cpp src/world/world.cpp \
+    -o tests/test_sim && ./tests/test_sim
+```
+
 ## Lint / typecheck
 
 No C++ linter is wired yet. When adding one, prefer `clang-format` (`-style=file`, 4-space indent, `BasedOnStyle: LLVM`) and `cppcheck --enable=warning,style src/`. Add the command here so other agents run it:

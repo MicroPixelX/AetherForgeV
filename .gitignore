@@ -23,6 +23,9 @@ addons/aetherforgev/*.wasm
 .sconsign.dblite
 options.py
 
+# SIM test binary (built without godot-cpp)
+tests/test_sim
+
 # OS junk
 .DS_Store
 Thumbs.db
