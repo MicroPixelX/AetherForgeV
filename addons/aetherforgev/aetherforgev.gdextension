@@ -1,0 +1,13 @@
+[configuration]
+entry_symbol = "aetherforgev_library_init"
+compatibility_minimum = "4.3"
+
+[libraries]
+linux.debug.x86_64 = "res://addons/aetherforgev/bin/aetherforgev.linuxbsd.template_debug.so"
+linux.release.x86_64 = "res://addons/aetherforgev/bin/aetherforgev.linuxbsd.template_release.so"
+windows.debug.x86_64 = "res://addons/aetherforgev/bin/aetherforgev.windows.template_debug.dll"
+windows.release.x86_64 = "res://addons/aetherforgev/bin/aetherforgev.windows.template_release.dll"
+macos.debug = "res://addons/aetherforgev/bin/aetherforgev.macos.template_debug.framework"
+macos.release = "res://addons/aetherforgev/bin/aetherforgev.macos.template_release.framework"
+web.debug.wasm32 = "res://addons/aetherforgev/bin/aetherforgev.web.template_debug.wasm"
+web.release.wasm32 = "res://addons/aetherforgev/bin/aetherforgev.web.template_release.wasm"

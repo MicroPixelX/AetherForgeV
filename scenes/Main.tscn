@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://addons/aetherforgev/aetherforgev.gdextension" id="ext_aether"]
+
+[sub_resource type="GDScript" id="sub_cam_look"]
+script/source = "extends Camera3D
+var rot := Vector2.ZERO
+func _ready():
+    Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+func _unhandled_input(e):
+    if e is InputEventMouseMotion:
+        rot -= e.relative * 0.002
+        rotation = Vector3(rot.y, rot.x, 0)
+    if e.is_action_pressed('ui_cancel'):
+        Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+"
+
+[node name="Main" type="Node3D"]
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 4, 4)
+current = true
+script = SubResource("sub_cam_look")
+
+[node name="DirectionalLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707, 0.707, 0, -0.707, 0.707, 0, 8, 0)
+
+[node name="AetherTest" type="Node" parent="."]
+script = ExtResource("ext_aether")

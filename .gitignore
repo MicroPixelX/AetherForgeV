@@ -1,0 +1,34 @@
+# Godot 4+ specific ignores
+.godot/
+godot.editor
+*.translation
+
+# Imported translations (automatically generated)
+*.import
+
+# Build outputs
+addons/aetherforgev/bin/
+addons/aetherforgev/*.dll
+addons/aetherforgev/*.so
+addons/aetherforgev/*.dylib
+addons/aetherforgev/*.wasm
+
+# GDExtension build artifacts
+.sconf_temp/
+*.o
+*.os
+*.obj
+*.a
+*.lib
+.sconsign.dblite
+options.py
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*~
