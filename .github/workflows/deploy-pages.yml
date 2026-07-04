@@ -1,0 +1,97 @@
+name: Deploy Web build to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: deploy-pages-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  GODOT_VERSION: "4.3"
+  GODOT_CPP_BRANCH: "godot-4.3-stable"
+
+jobs:
+  build-web:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      # --- Build GDExtension C++ library for Web (Emscripten) -------------
+      - name: Set up Emscripten
+        uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: "3.1.63"
+          actions-cache-folder: emsdk-cache
+
+      - name: Verify Emscripten
+        run: emcc --version
+
+      - name: Cache godot-cpp
+        uses: actions/cache@v4
+        with:
+          path: godotcpp
+          key: godotcpp-${{ env.GODOT_CPP_BRANCH }}
+
+      - name: Clone godot-cpp
+        run: |
+          if [ ! -d godotcpp ]; then
+            git clone --depth 1 -b "$GODOT_CPP_BRANCH" https://github.com/godotengine/godot-cpp godotcpp
+          fi
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install SCons
+        run: python -m pip install --upgrade scons
+
+      - name: Build GDExtension library (Web)
+        run: scons platform=web target=template_release production=yes -j$(nproc)
+
+      # --- Export the Godot Web build -------------------------------------
+      - name: Set up Godot
+        uses: chickensoft-games/setup-godot@v1
+        with:
+          version: ${{ env.GODOT_VERSION }}
+          templates: true
+          export-templates: true
+
+      - name: Verify Godot
+        run: godot --version
+
+      - name: Export Web build
+        run: |
+          mkdir -p export
+          godot --headless --export-release "Web" export/index.html
+
+      - name: Verify export
+        run: |
+          test -f export/index.html
+          test -f export/index.wasm
+          ls -la export
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: export/
+
+  deploy-pages:
+    needs: build-web
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

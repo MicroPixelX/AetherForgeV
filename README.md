@@ -45,7 +45,25 @@ scons platform=web target=template_release
 
 Built artifact lands in `addons/aetherforgev/bin/aetherforgev.<platform>.<target>.<ext>`.
 
-## Deploy to itch.io (auto on push to `main`)
+## Deploy to GitHub Pages (auto on push to `main`)
+
+`.github/workflows/deploy-pages.yml` builds the GDExtension lib for Web
+(Emscripten), exports the Godot Web build, and serves it on GitHub Pages.
+
+**One-time setup (60 seconds, no build, no secret needed):**
+1. On your phone/browser open
+   https://github.com/MicroPixelX/AetherForgeV/settings/pages
+2. **Source** → choose **GitHub Actions** (not "Deploy from a branch").
+3. Save. Done.
+
+Live URL after the next CI run:
+```
+https://micropixelx.github.io/AetherForgeV
+```
+Every future push to `main` re-deploys automatically. No secret, no unzip,
+nothing to run locally.
+
+## Deploy to itch.io (also auto on push to `main`)
 
 `.github/workflows/deploy-web.yml` builds the GDExtension lib for Web
 (Emscripten), exports the Godot Web build, and uploads to itch.io.
